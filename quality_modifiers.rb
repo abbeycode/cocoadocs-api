@@ -43,33 +43,33 @@ class QualityModifiers
 
 # This document is a form of [literate programming](https://en.wikipedia.org/wiki/Literate_programming#cite_note-19)
 # within the [CocoaDocs-API](https://github.com/CocoaPods/cocoadocs-api/blob/master/quality_modifiers.rb).
-# As such it contains the actual ruby code that is ran in order to generate the individual scores. Plus, Swift looks like Ruby anyway - so you can read it ;).
+# As such it contains the actual ruby code that is run in order to generate the individual scores. Plus, Swift looks like Ruby anyway — so you can read it ;).
 
 # The aim of the Quality Index is to highlight postive metrics, and downplay the negative. It is very possible to have a Pod for which no modifier is actually applied. Meaning the Index stays at the default number of 50.
 # This is a pretty reasonable score.
 #
-# A good example of the mentality we have towards the modifiers is to think of a Pod with a majority of it's code in Swift.
+# A good example of the mentality we have towards the modifiers is to think of a Pod with the majority of its code in Swift.
 # It gets a boost, while an Objective-C one doesn't get modified. It's not about reducing points for Objective-C, but highlighting that right now a Swift library represents forward thinking best practices.
 
-# Finally, before we get started. These metrics are not set in stone, they have been evolving since their unveiling and will continue to do so in the future. Feedback is appreciated, ideally in [issues](https://github.com/CocoaPods/cocoapods.org/issues/new) - so they can be discussed.
+# Finally, before we get started, these metrics are not set in stone. They have been evolving since their unveiling and will continue to do so in the future. Feedback is appreciated, ideally in [issues](https://github.com/CocoaPods/cocoapods.org/issues/new) — so they can be discussed.
 
 ### Popularity Metrics
 
-# It's a pretty safe bet that an extremely popular library is going to be a well looked after, and maintained library. We weighed different metrics according to how much more valuable the individual metric is rather than just using stars as the core metric.
+# It's a pretty safe bet that an extremely popular library is going to be well looked after, and maintained. We weighed different metrics according to how much more valuable the individual metric is rather than just using stars as the core metric.
 
       Modifier.new("Very Popular", "The popularity of a project is a useful way of discovering if it is useful, and well maintained.", 30, Proc.new { |hash, stats, owners|
         value = stats[:contributors].to_i * 90 +  stats[:subscribers].to_i * 20 +  stats[:forks].to_i * 10 + stats[:stargazers].to_i
         value > 9000
       }),
 
-# However, not every idea needs to be big enough to warrent such high metrics. A high amount of engagement is useful in it's own right.
+# However, not every idea needs to be big enough to warrent such high metrics. A high amount of engagement is useful in its own right.
 
       Modifier.new("Popular", "A popular library means there can be a community to help improve and maintain a project.", 10, Proc.new { |hash, stats, owners|
         value = stats[:contributors].to_i * 90 +  stats[:subscribers].to_i * 20 +  stats[:forks].to_i * 10 + stats[:stargazers].to_i
         value > 1500
       }),
 
-# At the moment this is entirely focused on libraries that are coming from GitHub. In the future, once Stats for downloads/installs are mature then we will move over to that in order to accomodate libraries not using GitHub.
+# At the moment, this is entirely focused on libraries that are coming from GitHub. In the future, once Stats for downloads/installs are mature then we will move over to that in order to accomodate libraries not using GitHub.
 
 ### Inline Documentation
 # A lot of the generated documentation comes from inside the library itself.
@@ -87,7 +87,7 @@ class QualityModifiers
         hash[:doc_percent].to_i > 60
       }),
 
-# Providing no inline comments can make it tough for people to work with your code without having to juggle
+# Providing no inline comments can make it tough for people to work with your code, making them juggle
 # between multiple contexts.
 
       Modifier.new("Badly Documented", "Small amounts of documentation generally means the project is immature.", -8, Proc.new { |hash, stats, owners|
@@ -98,7 +98,7 @@ class QualityModifiers
 ### README Scoring
 # The README score is based on an algorithm that looks at the variety of the *bundled* README.
 # You can run the algorithm against any URL here on [scoreme.report](http://scoreme.report).
-# A README is the front-page of your library, it can provide an overview of API or show what the
+# A README is the front-page of your library: it can provide an overview of API or show what the
 # library can do.
 #
 # Strange as it sounds, if you are providing a binary CocoaPod, it is worth embedding your README.md
@@ -121,7 +121,7 @@ class QualityModifiers
 
 ### CHANGELOG
 #
-# Having a CHANGELOG means that its easier for people for compare older verions, as a metric of quality this generally
+# Having a CHANGELOG means that it's easier for people to compare older verions. As a metric of quality, this generally
 # shows a more mature library with care taken by the maintainer to show changes.
 
       Modifier.new("Has a CHANGELOG", "CHANGELOGs make it easy to see the differences between versions of your library.", 5, Proc.new { |hash, stats, owners|
@@ -130,7 +130,7 @@ class QualityModifiers
 
 ### Language Choices
 #
-# Swift is slowly happening. We wanted to positively discriminate people writing libraries in Swift.
+# Swift is slowly happening. We wanted to positively encourage people writing libraries in Swift.
 
       Modifier.new("Built in Swift", "Swift is where things are heading.", 5, Proc.new { |hash, stats, owners|
         hash[:dominant_language] == "Swift"
@@ -189,7 +189,7 @@ class QualityModifiers
         hash[:install_size].to_i > 10000
       }),
 
-# CocoaPods makes it easy to create a library with mutliple files, we wanted to encourage adoption of smaller
+# Since CocoaPods makes it easy to create a library with multiple files, we wanted to encourage adoption of smaller,
 # more composable libraries.
 
       Modifier.new("Lines of Code / File", "Smaller, more composeable classes tend to be easier to understand.", -8, Proc.new { |hash, stats, owners|
